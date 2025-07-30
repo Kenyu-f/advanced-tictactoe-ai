@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n×n マルバツゲーム</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">n×n マルバツゲーム</h1>
+        </div>
+        
+        <div class="game-controls">
+            <div class="control-group">
+                <label class="control-label">ボードサイズ</label>
+                <select id="boardSize">
+                    <option value="3">3×3</option>
+                    <option value="4">4×4</option>
+                    <option value="5" selected>5×5</option>
+                    <option value="6">6×6</option>
+                    <option value="7">7×7</option>
+                    <option value="8">8×8</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label">ゲームモード</label>
+                <select id="gameMode">
+                    <option value="human">人間 vs 人間</option>
+                    <option value="ai-easy">人間 vs AI (簡単)</option>
+                    <option value="ai-medium" selected>人間 vs AI (普通)</option>
+                    <option value="ai-hard">人間 vs AI (困難)</option>
+                </select>
+            </div>
+            
+            <button id="newGame">新しいゲーム</button>
+            <button id="resetScore">スコアリセット</button>
+        </div>
+        
+        <div class="game-area">
+            <div class="game-board-container">
+                <div id="gameBoard" class="game-board"></div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="current-turn">
+                    <div>現在のターン</div>
+                    <div class="turn-indicator" id="currentTurn">X</div>
+                </div>
+                
+                <div class="score-panel">
+                    <div class="panel-title">スコア</div>
+                    <div class="score-item">
+                        <span>プレイヤー X:</span>
+                        <span class="score-value" id="scoreX">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span>プレイヤー O:</span>
+                        <span class="score-value" id="scoreO">0</span>
+                    </div>
+                </div>
+                
+                <div class="powerups-panel">
+                    <div class="panel-title">パワーアップ</div>
+                    <div class="powerup-item" id="powerup-remove" data-powerup="remove">
+                        <div class="powerup-icon">🗑️</div>
+                        <div class="powerup-info">
+                            <div class="powerup-name">リムーブ</div>
+                            <div class="powerup-desc">相手のマークを1つ消去</div>
+                        </div>
+                        <div class="powerup-count" id="remove-count">2</div>
+                    </div>
+                    <div class="powerup-item" id="powerup-double" data-powerup="double">
+                        <div class="powerup-icon">⚡</div>
+                        <div class="powerup-info">
+                            <div class="powerup-name">ダブルターン</div>
+                            <div class="powerup-desc">もう一度手番を得る</div>
+                        </div>
+                        <div class="powerup-count" id="double-count">1</div>
+                    </div>
+                    <div class="powerup-item" id="powerup-block" data-powerup="block">
+                        <div class="powerup-icon">🛡️</div>
+                        <div class="powerup-info">
+                            <div class="powerup-name">ブロック</div>
+                            <div class="powerup-desc">1マスを3ターン使用不可に</div>
+                        </div>
+                        <div class="powerup-count" id="block-count">1</div>
+                    </div>
+                </div>
+                
+                <div class="game-info">
+                    <div class="panel-title">ゲーム情報</div>
+                    <div id="gameStatus">ゲーム進行中...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="gameModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-title" id="modalTitle">ゲーム終了</div>
+            <div id="modalMessage">プレイヤー X の勝利！</div>
+            <button id="modalNewGame" style="margin-top: 20px;">新しいゲーム</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+</body>
+</html>
